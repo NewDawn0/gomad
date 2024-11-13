@@ -21,6 +21,7 @@ go get github.com/NewDawn0/gomad
 ## Example Usage
 
 ```go
+
 package main
 
 import (
@@ -29,16 +30,17 @@ import (
 )
 
 // Function that returns a value and error
-func a(x int) (int error) {
-    if x == 42 {
-        return 100, nil
-    }
-    return 0, fmt.Errorf("Number not 42")
+func fn(x int) (int, error) {
+	if x == 42 {
+		return 100, nil
+	}
+	return 0, fmt.Errorf("Number not 42")
 }
+
 // Errorous function
 // Functions can accept arguments of anytype
-fnError := func(x string) (int, error) {
-    return 0, fmt.Errorf("something went wrong")
+func fnError(x string) (int, error) {
+	return 0, fmt.Errorf("something went wrong")
 }
 
 func main() {
@@ -46,7 +48,7 @@ func main() {
 	monad := gomad.NewTypedMonad(42)
 
 	// Bind the function to the monad
-	monad = monad.Bind(a, monad.Val)
+	monad = monad.Bind(fn, monad.Val)
 
 	// Retrieve the result or a default value if error occurred
 	result := monad.ValueOr(0)
@@ -99,20 +101,26 @@ If an error occurs during a bind operation, the monad will propagate the error a
 ### Example of Error Propagation
 
 ```go
-fn := func(x int) (int, error) {
+package main
+
+import (
+	"fmt"
+	"github.com/NewDawn0/gomad"
+)
+
+func fn(x int) (int, error) {
 	return 0, fmt.Errorf("something went wrong")
 }
-fn2 := func(x int) (int, error) {
+func fn2(x int) (int, error) {
 	return 0, fmt.Errorf("something went wrong here aswell")
 }
-
-monad := gomad.NewTypedMonad(42)
-monad = monad.Bind(fn, monad.Val)
-monad = monad.Bind(fn2, monad.Val)
-
-// Will return the default value 0
-result := monad.ValueOr(0)
-fmt.Println(result) // Output: 0, Err: "Something went wrong"
+func main() {
+	// Create new monad
+	monad := gomad.NewTypedMonad(42)
+	monad = monad.Bind(fn, monad.Val)  // Val: 0, Err: "Something went wrong"
+	monad = monad.Bind(fn2, monad.Val) // Val: 0, Err: "Something went wrong"
+	fmt.Printf("Monad { %v }\n", monad) // Outputs: Monad { {0 something went wrong} }
+}
 ```
 
 ## Function Signature
