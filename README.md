@@ -26,7 +26,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/NewDawn0/gomad"
+	"github.com/NewDawn0/gomad/gomad"
 )
 
 // Function that returns a value and error
@@ -105,7 +105,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/NewDawn0/gomad"
+	"github.com/NewDawn0/gomad/gomad"
 )
 
 func fn(x int) (int, error) {
