@@ -48,14 +48,14 @@ func main() {
 	monad := gomad.NewTypedMonad(42)
 
 	// Bind the function to the monad
-	monad = monad.Bind(fn, monad.Val)
+	monad.Bind(fn, monad.Val)
 
 	// Retrieve the result or a default value if error occurred
 	result := monad.ValueOr(0)
 	fmt.Println(result) // Output: 100
 
 	// Bind the error function to the monad
-	monad = monad.Bind(fnError, "test")
+	monad.Bind(fnError, "test")
 
 	// Retrieve the result or a default value if error occurred
 	result = monad.ValueOr(0)
@@ -117,8 +117,8 @@ func fn2(x int) (int, error) {
 func main() {
 	// Create new monad
 	monad := gomad.NewTypedMonad(42)
-	monad = monad.Bind(fn, monad.Val)  // Val: 0, Err: "Something went wrong"
-	monad = monad.Bind(fn2, monad.Val) // Val: 0, Err: "Something went wrong"
+	monad.Bind(fn, monad.Val)  // Val: 0, Err: "Something went wrong"
+	monad.Bind(fn2, monad.Val) // Val: 0, Err: "Something went wrong"
 	fmt.Printf("Monad { %v }\n", monad) // Outputs: Monad { {0 something went wrong} }
 }
 ```
@@ -141,7 +141,7 @@ invalidFn := func(x int) string {
 	return "Invalid"
 }
 
-monad = monad.Bind(invalidFn, monad.Val)
+monad.Bind(invalidFn, monad.Val)
 // This will return an error in the monad
 ```
 
