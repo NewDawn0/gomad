@@ -62,7 +62,6 @@ func (self *TypedErrMonad[T]) Bind(f interface{}, args ...interface{}) *TypedErr
 			self.Val = zero
 			return self
 		}
-		fmt.Println("Failed to convert func to output T")
 		self.Err = fmt.Errorf("Failed to convert function output to T")
 		self.Val = zero
 		return self
