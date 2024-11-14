@@ -26,7 +26,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/NewDawn0/gomad/gomad"
+	"github.com/NewDawn0/gomad"
 )
 
 // Function that returns a value and error
@@ -101,13 +101,6 @@ If an error occurs during a bind operation, the monad will propagate the error a
 ### Example of Error Propagation
 
 ```go
-package main
-
-import (
-	"fmt"
-	"github.com/NewDawn0/gomad/gomad"
-)
-
 func fn(x int) (int, error) {
 	return 0, fmt.Errorf("something went wrong")
 }
